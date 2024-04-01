@@ -1,3 +1,4 @@
+const Project = require('../models/Project');
 const Worker = require('../models/Worker');
 
 // Create a new worker
