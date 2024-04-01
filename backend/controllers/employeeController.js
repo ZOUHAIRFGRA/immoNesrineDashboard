@@ -90,3 +90,13 @@ exports.assignProjectToEmployee = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+// Retrieve all employees
+exports.getEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    res.json(employees);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
