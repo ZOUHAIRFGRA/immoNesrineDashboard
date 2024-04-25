@@ -6,14 +6,15 @@ import {
 } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
-import ClientList from "./components/ClientList";
+import ClientList from "./components/clients/ClientList";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
 import { useState, useEffect } from "react";
 import axios from "axios";
-import AddClientForm from "./components/AddClient";
-import EmployeePage from "./components/EmployeePage";
+import AddClientForm from "./components/clients/AddClient";
+import EmployeePage from "./components/employees/EmployeePage";
 import ProjectAssignmentForm from "./components/ProjectAssignmentForm";
+import ProjectPage from "./components/projects/ProjectPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,6 +73,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <EmployeePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <PrivateRoute>
+                  <ProjectPage />
                 </PrivateRoute>
               }
             />

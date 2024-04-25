@@ -167,6 +167,54 @@ const Sidebar = () => {
                 </List>
               </AccordionBody>
             </Accordion>
+            <Accordion
+              open={open === 5}
+              icon={
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    open === 5 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem className="p-0" selected={open === 5}>
+                <AccordionHeader
+                  onClick={() => handleOpen(5)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <Typography
+                    color="blue-gray"
+                    className="mr-auto font-normal flex items-center"
+                  >
+                    Projects
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem>
+                    <Link to="/addproject" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Add Project
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to="/projects" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      View Projects
+                    </Link>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
             <hr className="my-2 border-blue-gray-50" />
             <ListItem>
               <ListItemPrefix>
