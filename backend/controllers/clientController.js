@@ -23,7 +23,7 @@ exports.createClient = async (req, res) => {
 // Retrieve all clients
 exports.getClients = async (req, res) => {
   try {
-    const clients = await Client.find();
+    const clients = await Client.find().populate('projects');
     res.json(clients);
   } catch (err) {
     console.error(err.message);

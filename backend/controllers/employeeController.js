@@ -93,7 +93,7 @@ exports.assignProjectToEmployee = async (req, res) => {
 // Retrieve all employees
 exports.getEmployees = async (req, res) => {
   try {
-    const employees = await Employee.find();
+    const employees = await Employee.find().populate('projects');
     res.json(employees);
   } catch (err) {
     console.error(err.message);

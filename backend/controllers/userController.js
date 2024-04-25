@@ -1,74 +1,32 @@
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const secretKey = 'your_secret_key'; // Change this to a secret key for JWT
 
 // Register a new user
 exports.registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    // Check if user already exists
-    let user = await User.findOne({ username });
-    if (user) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
-
-    // Create new user
-    user = new User({
-      username,
-      password
-    });
-
-    // Encrypt password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
-    // Save user to database
-    await user.save();
-
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    const user = await User.create({ username,password });
+    res.status(201).json({ success: true, user });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
-// User login
+// Login user and generate JWT token
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) throw new Error('User not found');
 
-    // Check if user exists
-    let user = await User.findOne({ username });
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) throw new Error('Invalid credentials');
 
-    // Check password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    // Create and return JWT token
-    const payload = {
-      user: {
-        id: user.id,
-        isAdmin: user.isAdmin
-      }
-    };
-
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '1444h' }, // Adjust token expiration as needed
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1000h' });
+    res.status(200).json({ success: true, token });
+  } catch (error) {
+    res.status(401).json({ success: false, message: error.message });
   }
 };
+

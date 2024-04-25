@@ -3,16 +3,16 @@ const router = express.Router();
 const employeeController = require('../controllers/employeeController');
 
 // Create a new employee
-router.post('/', employeeController.createEmployee);
-router.get('/', employeeController.getEmployees);
+router.post('/employees', employeeController.createEmployee);
+router.get('/employees', employeeController.getEmployees);
 
 // Update an existing employee (partial update)
-router.put('/:id', employeeController.updateEmployee);
+router.put('/employees/:id', employeeController.updateEmployee);
 
 // Delete an existing employee
-router.delete('/:id', employeeController.deleteEmployee);
+router.delete('/employees/:id', employeeController.deleteEmployee);
 
 // Assign project to employee
-router.post('/assign-project', employeeController.assignProjectToEmployee);
+router.post('/employees/assign-project', employeeController.assignProjectToEmployee);
 
 module.exports = router;
