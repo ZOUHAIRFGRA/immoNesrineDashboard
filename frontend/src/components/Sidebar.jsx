@@ -18,6 +18,7 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   PowerIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
 import {
   ChevronRightIcon,
@@ -25,6 +26,7 @@ import {
   MagnifyingGlassIcon,
   Bars3Icon,
   XMarkIcon,
+  BuildingOfficeIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
@@ -115,7 +117,6 @@ const Sidebar = () => {
                       Assign Project
                     </Link>
                   </ListItem>
-                  
                 </List>
               </AccordionBody>
             </Accordion>
@@ -215,6 +216,126 @@ const Sidebar = () => {
                 </List>
               </AccordionBody>
             </Accordion>
+            <Accordion
+              open={open === 7}
+              icon={
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    open === 7 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem className="p-0" selected={open === 7}>
+                <AccordionHeader
+                  onClick={() => handleOpen(7)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <Typography
+                    color="blue-gray"
+                    className="mr-auto font-normal flex items-center"
+                  >
+                    Workers
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem>
+                    <Link to="/addworker" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Add Worker
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to="/workers" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      View Workers
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to="/assignPrjToWorker" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Assign Project To Worker
+                    </Link>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={open === 9}
+              icon={
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    open === 9 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem className="p-0" selected={open === 9}>
+                <AccordionHeader
+                  onClick={() => handleOpen(9)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <BuildingOfficeIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <Typography
+                    color="blue-gray"
+                    className="mr-auto font-normal flex items-center"
+                  >
+                    Materials
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem>
+                    <Link to="/addmaterial" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Add Material
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to="/materials" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      View Materials
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to="/rentMaterial" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Rent Material
+                    </Link>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Link to="/expenses" >
+              <ListItem>
+              <ListItemPrefix>
+              <CurrencyDollarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Expenses
+              </ListItem>
+            </Link>
             <hr className="my-2 border-blue-gray-50" />
             <ListItem>
               <ListItemPrefix>

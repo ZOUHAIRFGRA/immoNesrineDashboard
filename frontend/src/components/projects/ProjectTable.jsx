@@ -1,8 +1,55 @@
 // ProjectTable.js
-import React from "react";
-import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
+import React, { useEffect, useState } from "react";
+import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import Skeleton from "@mui/material/Skeleton";
+const ProjectTable = ({
+  
+  onDelete,
+  onEdit,
+  
+  
+}) => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const ProjectTable = ({ projects, onDelete, onEdit }) => {
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('/project/projects');
+      console.log('data : ',response.data); // Check the type and content of response.data
+      setProjects(response.data || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      setLoading(false);
+    }
+  };
+  
+  const renderSkeletonRow = () => {
+    return (
+      <tr>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+      </tr>
+    );
+  };
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -30,41 +77,53 @@ const ProjectTable = ({ projects, onDelete, onEdit }) => {
           </tr>
         </thead>
         <tbody>
-          {projects.map((project) => (
-            <tr key={project._id}>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {project.name}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {project.description}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {project.client ? project.client.name : 'N/A'}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {new Date(project.startDate).toLocaleDateString()}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {new Date(project.endDate).toLocaleDateString()}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                {project.status}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                <button
-                  onClick={() => onEdit(project)}
-                  className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline ml-2"
-                >
-                  <PencilIcon className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={() => onDelete(project._id)}
-                  className="text-red-600 hover:text-red-900 focus:outline-none focus:underline ml-2"
-                >
-                  <TrashIcon className="h-5 w-5" />
-                </button>
-              </td>
-            </tr>
+        {loading ? (
+            <>
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {/* Add more skeleton rows as needed */}
+            </>
+          ) : (
+            Array.isArray(projects) && projects.map((project) => (
+              <tr key={project._id}>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {project.name}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {project.description}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {project.client ? project.client.name : 'N/A'}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {new Date(project.startDate).toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {new Date(project.endDate).toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap">
+                  {project.status}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                  <button
+                    onClick={() => onEdit(project)}
+                    className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline ml-2"
+                  >
+                    <PencilIcon className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(project._id)}
+                    className="text-red-600 hover:text-red-900 focus:outline-none focus:underline ml-2"
+                  >
+                    <TrashIcon className="h-5 w-5" />
+                  </button>
+                </td>
+              </tr>
+            )
           ))}
         </tbody>
       </table>

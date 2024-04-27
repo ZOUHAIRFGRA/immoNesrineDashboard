@@ -1,8 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
-
-const EmployeeTable = ({ employees, onDelete, onEdit }) => {
+import Skeleton from '@mui/material/Skeleton';
+const EmployeeTable = ({ employees,loading, onDelete, onEdit }) => {
+  const renderSkeletonRow = () => {
+    return (
+      <tr>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={81} />
+        </td>
+      </tr>
+    );
+  };
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -25,7 +49,19 @@ const EmployeeTable = ({ employees, onDelete, onEdit }) => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+        {loading ? (
+            <>
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {/* Add more skeleton rows as needed */}
+            </>
+          ) : (
+            Array.isArray(employees) &&
+          employees.map((employee) => (
             <tr key={employee._id}>
               <td className="px-6 py-4 whitespace-no-wrap">
                 {employee.firstName}
@@ -67,6 +103,7 @@ const EmployeeTable = ({ employees, onDelete, onEdit }) => {
                 </button>
               </td>
             </tr>
+          )
           ))}
         </tbody>
       </table>

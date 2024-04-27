@@ -1,7 +1,7 @@
-// ProjectModal.js
+// workerModal.js
 import React from 'react';
 import Modal from 'react-modal';
-import ProjectForm from './ProjectForm';
+import WorkerForm from './WorkerForm';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 const customStyles = {
@@ -25,22 +25,22 @@ const customStyles = {
   },
 };
 
-const ProjectModal = ({ isOpen, onClose, onSubmit, projectToEdit }) => {
+const WorkerModal = ({ isOpen, onClose, onSubmit, workerToEdit }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      contentLabel="Project Modal"
+      contentLabel="worker Modal"
       style={customStyles}
     >
       <div className="bg-white rounded-lg overflow-hidden">
         <button className="absolute top-4 right-4 text-gray-600 hover:text-gray-800" onClick={onClose}>
           <XCircleIcon className="h-6 w-6" />
         </button>
-        <ProjectForm onSubmit={onSubmit} projectToEdit={projectToEdit} />
+        <WorkerForm onSubmit={onSubmit} workerToEdit={workerToEdit} />
       </div>
     </Modal>
   );
 };
 
-export default ProjectModal;
+export default WorkerModal;

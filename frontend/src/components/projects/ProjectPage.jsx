@@ -4,12 +4,13 @@ import axios from 'axios';
 import ProjectTable from './ProjectTable';
 import Swal from 'sweetalert2';
 import ProjectModal from './ProjectModal';
+import Skeleton from '@mui/material/Skeleton';
 
 const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
   const [projectToEdit, setProjectToEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -17,12 +18,15 @@ const ProjectPage = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get('/project/projects');
-      setProjects(response.data);
+      await setProjects(response.data || []);
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching projects:', error);
+      setLoading(false)
     }
   };
 
+  
   const handleAddProject = async (formData) => {
     try {
       await axios.post('/project/projects', formData);
@@ -89,7 +93,8 @@ const ProjectPage = () => {
       <h1 className="text-3xl font-bold mb-8">Project Management</h1>
       <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md" onClick={openModal}>Add Project</button>
       <ProjectModal isOpen={isModalOpen} onClose={closeModal} onSubmit={projectToEdit ? handleUpdateProject : handleAddProject} projectToEdit={projectToEdit} />
-      <ProjectTable projects={projects} onDelete={handleDeleteProject} onEdit={handleEditProject} />
+      
+      <ProjectTable   onDelete={handleDeleteProject} onEdit={handleEditProject} />
     </div>
   );
 };

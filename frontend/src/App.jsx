@@ -15,6 +15,13 @@ import AddClientForm from "./components/clients/AddClient";
 import EmployeePage from "./components/employees/EmployeePage";
 import ProjectAssignmentForm from "./components/ProjectAssignmentForm";
 import ProjectPage from "./components/projects/ProjectPage";
+import WorkerPage from "./components/workers/WorkerPage";
+import AssignWorkerPrj from "./components/workers/AssignWorkerPrj";
+import ProjectForm from "./components/projects/ProjectForm";
+import WorkerForm from "./components/workers/WorkerForm";
+import ExpensesPage from "./components/expenses/ExpensesPage";
+import MaterialForm from "./components/materials/MaterialForm";
+import MaterialsPage from "./components/materials/MaterialPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,10 +76,50 @@ function App() {
               }
             />
             <Route
+              path="/addproject"
+              element={
+                <PrivateRoute>
+                  <ProjectForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/addworker"
+              element={
+                <PrivateRoute>
+                  <WorkerForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
               path="/employees"
               element={
                 <PrivateRoute>
                   <EmployeePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/addmaterial"
+              element={
+                <PrivateRoute>
+                  <MaterialForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/materials"
+              element={
+                <PrivateRoute>
+                  <MaterialsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/rentMaterial"
+              element={
+                <PrivateRoute>
+                  <MaterialsPage />
                 </PrivateRoute>
               }
             />
@@ -89,6 +136,30 @@ function App() {
               element={
                 <PrivateRoute>
                   <ProjectAssignmentForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/workers"
+              element={
+                <PrivateRoute>
+                  <WorkerPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/expenses"
+              element={
+                <PrivateRoute>
+                  <ExpensesPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/assignPrjToWorker"
+              element={
+                <PrivateRoute>
+                  <AssignWorkerPrj />
                 </PrivateRoute>
               }
             />

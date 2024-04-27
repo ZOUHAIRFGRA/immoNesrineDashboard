@@ -5,14 +5,14 @@ import EmployeeTable from './EmployeeTable';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { XCircleIcon } from '@heroicons/react/24/solid';
-
+import Skeleton from '@mui/material/Skeleton';
 Modal.setAppElement('#root');
 
 const EmployeePage = () => {
   const [employees, setEmployees] = useState([]);
   const [employeeToEdit, setEmployeeToEdit] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
+const [loading,setLoading] = useState(true)
   useEffect(() => {
     fetchEmployees();
   }, []);
@@ -21,8 +21,10 @@ const EmployeePage = () => {
     try {
       const response = await axios.get('/employee/employees');
       setEmployees(response.data);
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching employees:', error);
+      setLoading(false)
     }
   };
 
@@ -105,7 +107,7 @@ const EmployeePage = () => {
           <EmployeeForm onSubmit={employeeToEdit ? handleUpdateEmployee : handleAddEmployee} employeeToEdit={employeeToEdit} />
         </div>
       </Modal>
-      <EmployeeTable employees={employees} onDelete={handleDeleteEmployee} onEdit={handleEditEmployee} />
+      <EmployeeTable loading={loading} employees={employees} onDelete={handleDeleteEmployee} onEdit={handleEditEmployee} />
     </div>
   );
 };

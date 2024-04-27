@@ -10,6 +10,7 @@ const workerRoutes = require('./routes/workerRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const rentRoutes = require('./routes/rentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
 const connectDB = require('./config/db')
 const authMiddleware = require('./middlewares/auth')
 // Initialize express app
@@ -36,6 +37,7 @@ app.use('/api/v1/project',authMiddleware, projectRoutes);
 app.use('/api/v1/worker',authMiddleware, workerRoutes);
 app.use('/api/v1/material',authMiddleware, materialRoutes);
 app.use('/api/v1/rent',authMiddleware, rentRoutes);
+app.use('/api/v1/expense',authMiddleware, expenseRoutes);
 app.use('/api/v1/auth', authRoutes);
 
 // Server port 

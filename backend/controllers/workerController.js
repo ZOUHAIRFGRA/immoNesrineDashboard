@@ -25,7 +25,7 @@ exports.createWorker = async (req, res) => {
 // Retrieve all workers
 exports.getWorkers = async (req, res) => {
   try {
-    const workers = await Worker.find();
+    const workers = await Worker.find().populate('projectId');
     res.json(workers);
   } catch (err) {
     console.error(err.message);

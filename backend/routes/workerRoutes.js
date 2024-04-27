@@ -3,18 +3,18 @@ const router = express.Router();
 const workerController = require('../controllers/workerController');
 
 // Create a new worker
-router.post('/', workerController.createWorker);
+router.post('/workers', workerController.createWorker);
 
 // Retrieve all workers
-router.get('/', workerController.getWorkers);
+router.get('/workers', workerController.getWorkers);
 
 // Update an existing worker (partial update)
-router.put('/:id', workerController.updateWorker);
+router.put('/workers/:id', workerController.updateWorker);
 
 // Delete an existing worker
-router.delete('/:id', workerController.deleteWorker);
+router.delete('/workers/:id', workerController.deleteWorker);
 
 // Assign worker to project
-router.post('/assign-project', workerController.assignWorkerToProject);
+router.post('/workers/assign-project', workerController.assignWorkerToProject);
 
 module.exports = router;
