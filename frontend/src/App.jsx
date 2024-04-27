@@ -22,6 +22,7 @@ import WorkerForm from "./components/workers/WorkerForm";
 import ExpensesPage from "./components/expenses/ExpensesPage";
 import MaterialForm from "./components/materials/MaterialForm";
 import MaterialsPage from "./components/materials/MaterialPage";
+import RentsList from "./components/materials/RentList";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -112,6 +113,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <MaterialsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/rents"
+              element={
+                <PrivateRoute>
+                  <RentsList />
                 </PrivateRoute>
               }
             />

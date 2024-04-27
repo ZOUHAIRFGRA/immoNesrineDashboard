@@ -318,6 +318,14 @@ const Sidebar = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
+                    <Link to="/rents" className="flex items-center">
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      View rents
+                    </Link>
+                  </ListItem>
+                  <ListItem>
                     <Link to="/rentMaterial" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

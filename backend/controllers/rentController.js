@@ -3,7 +3,7 @@ const Material = require('../models/Material');
 // Get all rents
 exports.getRents = async (req, res) => {
     try {
-      const rents = await Rent.find();
+      const rents = await Rent.find().populate('material').populate('client');
       res.json(rents);
     } catch (err) {
       console.error(err.message);
