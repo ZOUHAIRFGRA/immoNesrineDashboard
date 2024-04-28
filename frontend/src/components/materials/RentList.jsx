@@ -8,6 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import RentMaterialModal from "./RentMaterialModal";
+import Skeleton from "@mui/material/Skeleton";
 
 const RentsList = () => {
   const [rents, setRents] = useState([]);
@@ -15,13 +16,16 @@ const RentsList = () => {
   useEffect(() => {
     fetchRents();
   }, []);
+  const [loading, setLoading] = useState(true);
 
   const fetchRents = async () => {
     try {
       const response = await axios.get("/rent/rents");
       setRents(response.data);
+      setLoading(false)
     } catch (error) {
       console.error("Failed to fetch rents:", error);
+      setLoading(false)
     }
   };
 
@@ -56,12 +60,42 @@ const RentsList = () => {
     console.log("Modal closed");
     setIsModalOpen(false);
   };
+  const renderSkeletonRow = () => {
+    return (
+      <tr>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+       <td className="px-6 py-4 whitespace-no-wrap">
+          <Skeleton variant="text" width={100} />
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <h1 className="text-2xl font-bold mb-6">Rents List</h1>
       <button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
+        className="bg-blue-500 mb-10 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
         onClick={openModal}
       >
         Rent Material
@@ -81,7 +115,18 @@ const RentsList = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(rents) &&
+        {loading ? (
+            <>
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {renderSkeletonRow()}
+              {/* Add more skeleton rows as needed */}
+            </>
+          ) : (
+          Array.isArray(rents) &&
             rents.map((rent) => (
               <tr key={rent._id} className="hover:bg-gray-100">
                 <td className="py-2 px-4 border">{rent.material.name}</td>
@@ -112,7 +157,7 @@ const RentsList = () => {
                   )}
                 </td>
               </tr>
-            ))}
+            )))}
         </tbody>
       </table>
     </div>

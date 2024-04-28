@@ -102,9 +102,7 @@ const MaterialsPage = () => {
        <td className="px-6 py-4 whitespace-no-wrap">
           <Skeleton variant="text" width={100} />
         </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
+       
       </tr>
     );
   };
