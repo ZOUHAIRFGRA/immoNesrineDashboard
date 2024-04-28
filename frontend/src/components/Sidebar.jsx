@@ -14,12 +14,14 @@ import {
   Card,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
   UserCircleIcon,
   Cog6ToothIcon,
   PowerIcon,
   CurrencyDollarIcon,
-} from "@heroicons/react/24/solid";
+  WrenchScrewdriverIcon,
+  UserGroupIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 import {
   ChevronRightIcon,
   ChevronDownIcon,
@@ -28,6 +30,7 @@ import {
   XMarkIcon,
   BuildingOfficeIcon,
 } from "@heroicons/react/24/outline";
+import { HomeModernIcon } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(0);
@@ -42,29 +45,29 @@ const Sidebar = () => {
 
   return (
     <>
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
-        {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
-        )}
-      </IconButton>
-      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
-        <Card
-          color="transparent"
-          shadow={false}
-          className="h-[calc(100vh-2rem)] w-full p-4"
-        >
-          <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-              alt="brand"
-              className="h-8 w-8"
-            />
-            <Typography variant="h5" color="blue-gray">
-              Immo Nesrine
-            </Typography>
-          </div>
+    <IconButton variant="text" size="lg" onClick={openDrawer}>
+      {isDrawerOpen ? (
+        <XMarkIcon className="h-8 w-8 stroke-2" />
+      ) : (
+        <Bars3Icon className="h-8 w-8 stroke-2" />
+      )}
+    </IconButton>
+    <Drawer open={isDrawerOpen} onClose={closeDrawer}>
+      <Card
+        color="transparent"
+        shadow={false}
+        className="h-[calc(100vh-2rem)] w-full p-4 overflow-y-auto"
+      >
+        <div className="mb-2 flex items-center gap-4 p-4">
+          <img
+            src="/logo.svg"
+            alt="brand"
+            className="h-12 w-12"
+          />
+          <Typography variant="h5" color="blue-gray">
+            Immo Nesrine
+          </Typography>
+        </div>
           <div className="p-2">
             <Input
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -83,13 +86,21 @@ const Sidebar = () => {
                 />
               }
             >
+              <Link to="/" >
+              <ListItem>
+              <ListItemPrefix>
+              <HomeModernIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Dashboard
+              </ListItem>
+            </Link>
               <ListItem className="p-0" selected={open === 1}>
                 <AccordionHeader
                   onClick={() => handleOpen(1)}
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <PresentationChartBarIcon className="h-5 w-5" />
+                    <UsersIcon  className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography
                     color="blue-gray"
@@ -185,7 +196,7 @@ const Sidebar = () => {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <UserCircleIcon className="h-5 w-5" />
+                    <BuildingOfficeIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography
                     color="blue-gray"
@@ -233,7 +244,7 @@ const Sidebar = () => {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <UserCircleIcon className="h-5 w-5" />
+                    <UserGroupIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography
                     color="blue-gray"
@@ -289,7 +300,7 @@ const Sidebar = () => {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <BuildingOfficeIcon className="h-5 w-5" />
+                    <WrenchScrewdriverIcon  className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography
                     color="blue-gray"

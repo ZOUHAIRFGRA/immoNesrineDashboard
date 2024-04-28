@@ -28,7 +28,7 @@ const generatePDF = async (htmlContent, apiKey) => {
         source: htmlContent,
         landscape: false,
         use_print: false,
-        sandbox: true,
+        sandbox: false,
       }),
     });
 
