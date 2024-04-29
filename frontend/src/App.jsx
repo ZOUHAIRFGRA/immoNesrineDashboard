@@ -31,6 +31,7 @@ function App() {
     const token = localStorage.getItem("token");
     if (token) {
       axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
+      console.log(axios.defaults.baseURL)
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setIsLoggedIn(true);
     } else {

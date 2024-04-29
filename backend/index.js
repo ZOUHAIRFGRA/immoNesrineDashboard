@@ -17,7 +17,6 @@ const authMiddleware = require('./middlewares/auth')
 const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/public', express.static('public'));
 app.use(cors({
   origin: 'https://immonesrine-crm.vercel.app',
   credentials:true, 
