@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static('public'));
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://immonesrine.vercel.app',
   credentials:true, 
   exposedHeaders: ['Content-Disposition','Authorization'],   
   allowedHeaders: ['Content-Type','Authorization'],        

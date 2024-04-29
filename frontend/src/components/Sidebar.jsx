@@ -52,7 +52,7 @@ const navigate = useNavigate()
 const handleLogOut = () => {
   // Remove token from localStorage
   localStorage.removeItem('token');
-  navigate('/')
+  navigate('/login')
 }
   return (
     <>
