@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   IconButton,
   Typography,
@@ -35,14 +35,25 @@ import { HomeModernIcon } from "@heroicons/react/24/outline";
 const Sidebar = () => {
   const [open, setOpen] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+const navigate = useNavigate()
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
 
-  const openDrawer = () => setIsDrawerOpen(true);
-  const closeDrawer = () => setIsDrawerOpen(false);
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+    document.body.style.overflow = "hidden"; // Disable scrolling in the main page
+  };
 
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+    document.body.style.overflow = "auto"; // Enable scrolling in the main page
+  };
+const handleLogOut = () => {
+  // Remove token from localStorage
+  localStorage.removeItem('token');
+  navigate('/')
+}
   return (
     <>
     <IconButton variant="text" size="lg" onClick={openDrawer}>
@@ -362,7 +373,7 @@ const Sidebar = () => {
               </ListItemPrefix>
               Settings
             </ListItem>
-            <ListItem>
+            <ListItem onClick={handleLogOut}>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
