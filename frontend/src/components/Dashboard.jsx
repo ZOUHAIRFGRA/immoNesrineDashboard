@@ -74,6 +74,7 @@ const Dashboard = () => {
   
     // Extract dates and prices from filtered expenses
     const dates = Array.isArray(filteredExpenses) && filteredExpenses.map(expense => new Date(expense.date)).sort((a, b) => a - b);
+   console.log("dates",dates)
     // Sort the dates in ascending order
     const prices =  Array.isArray(dates) &&  dates.map(date => {
       const totalPrice = Array.isArray(filteredExpenses) && filteredExpenses
@@ -81,43 +82,52 @@ const Dashboard = () => {
         .reduce((total, expense) => total + expense.price, 0);
       return totalPrice;
     });
+    console.log(prices)
 
-    const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
+    const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
 
     
-  const chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: dates,
-      datasets: [{
-        label: 'Expense Price',
-        data: prices,
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            unit: 'day', // Display labels by day
-            displayFormats: {
-              day: 'MMM dd' // Format for displaying month and day
+    const chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Expense Price',
+          data: prices,
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+    maintainAspectRatio: false,
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day', // Display labels by day
+              displayFormats: {
+                day: 'MMM dd' // Format for displaying month and day
+              },
+              },
+            ticks: {
+              stepSize: 5 // Set the interval between ticks to 5000
             },
-            stepSize: 15 // Display every 15 days
+            beginAtZero: true
+
           },
-          beginAtZero: true
-        },
-        y: {
-          beginAtZero: true,
-          min: minPrice, // Set the minimum value of the y-axis to the minimum price
-          stepSize: 5000 // Set the interval between ticks to 5000
+          y: {
+            beginAtZero: false,
+            min: minPrice, // Set the minimum value of the y-axis to the minimum price
+            ticks: {
+              stepSize: 5000 // Set the interval between ticks to 5000
+            }
+          }
         }
       }
-    }
-  });
+    });
+    
+    
   
     setExpensesChartInstance(chartInstance);
   };
@@ -142,6 +152,8 @@ const Dashboard = () => {
         }]
       },
       options: {
+        responsive: true,
+    maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true
@@ -152,6 +164,8 @@ const Dashboard = () => {
 
     setMaterialsChartInstance(chartInstance);
   };
+
+  
 
   const calculateMaterialsRentedCount = () => {
     const rentedCountMap = {};
@@ -172,23 +186,84 @@ const Dashboard = () => {
   const calculateTotalRentedCount = () => {
     return Object.values(calculateMaterialsRentedCount()).reduce((total, count) => total + count, 0);
   };
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-  <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
   
-  <div className="flex flex-wrap mb-8">
-    <div className="w-full lg:w-1/2 mb-4 lg:mb-0">
-      <h2 className="text-xl font-bold mb-4">Total Expenses Amount: ${calculateTotalExpenses()}</h2>
-      <canvas ref={expensesChartRef} style={{ width: '100%', height: '400px' }}></canvas>
-    </div>
+  const UsedmaterialsChartRef = useRef(null);
+  const [UsedmaterialsChartInstance, setUsedMaterialsChartInstance] = useState(null);
+  const [UsedmaterialsData, setUsedMaterialsData] = useState([]);
 
-    <div className="w-full lg:w-1/2">
-      <h2 className="text-xl font-bold mb-4">Total Materials Rented Count: {calculateTotalRentedCount()}</h2>
-      <canvas ref={materialsChartRef} style={{ width: '100%', height: '400px' }}></canvas>
+  useEffect(() => {
+    fetchUsedMaterialsData();
+  }, []);
+
+  const fetchUsedMaterialsData = async () => {
+    try {
+      const response = await axios.get('/material/materials');
+      setUsedMaterialsData(response.data);
+    } catch (error) {
+      console.error('Error fetching materials data:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (UsedmaterialsData.length > 0) {
+      destroyChartInstance(UsedmaterialsChartInstance);
+      renderUsedMaterialsChart();
+    }
+  }, [UsedmaterialsData]);
+
+  
+
+  const renderUsedMaterialsChart = () => {
+    const ctx = UsedmaterialsChartRef.current.getContext('2d');
+    const materialLabels =Array.isArray(UsedmaterialsData) &&   UsedmaterialsData.map(material => material.name);
+    const materialQuantities =Array.isArray(UsedmaterialsData) &&   UsedmaterialsData.map(material => material.quantity);
+
+    const chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: materialLabels,
+        datasets: [{
+          label: 'Material Quantity',
+          data: materialQuantities,
+          backgroundColor: Array.isArray(materialQuantities) &&   materialQuantities.map(quantity => quantity < 10 ? 'rgba(255, 99, 132, 0.6)' : 'rgba(54, 162, 235, 0.6)'),
+          borderColor: Array.isArray(materialQuantities) &&  materialQuantities.map(quantity => quantity < 10 ? 'rgba(255, 99, 132, 1)' : 'rgba(54, 162, 235, 1)'),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+    maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    setUsedMaterialsChartInstance(chartInstance);
+  };
+  return (
+   <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+      
+      <div className="mb-8" style={{ height: '400px' }}>
+        <h2 className="text-xl font-bold mb-4">Total Expenses Amount: ${calculateTotalExpenses()}</h2>
+        <canvas ref={expensesChartRef} style={{ width: '100%', height: '100%' }}></canvas>
+      </div>
+
+      <div className="flex flex-wrap mt-16">
+        <div className="w-full lg:w-1/2 mb-4 lg:mb-0" style={{ height: '400px' }}>
+          <h2 className="text-xl font-bold mb-4">Total Materials Rented Count: {calculateTotalRentedCount()}</h2>
+          <canvas ref={materialsChartRef} style={{ width: '100%', height: '100%' }}></canvas>
+        </div>
+
+        <div className="w-full lg:w-1/2 mb-4 lg:mb-0" style={{ height: '400px' }}>
+          <h2 className="text-xl font-bold mb-4">Materials Inventory</h2>
+          <canvas ref={UsedmaterialsChartRef} style={{ width: '100%', height: '100%' }}></canvas>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
   );
 };
