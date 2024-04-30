@@ -29,9 +29,10 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
+    console.log(axios.defaults.baseURL) // https://immonesrine-api.vercel.app/api/v1
+   
     if (token) {
-      axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
-      console.log(axios.defaults.baseURL)
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setIsLoggedIn(true);
     } else {
