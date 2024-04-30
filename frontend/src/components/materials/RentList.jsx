@@ -9,6 +9,9 @@ import {
 } from "@heroicons/react/24/solid";
 import RentMaterialModal from "./RentMaterialModal";
 import Skeleton from "@mui/material/Skeleton";
+import RentTable from "./RentTable";
+import RentMaterial from "./RentMaterial";
+import Modal from "react-modal";
 
 const RentsList = () => {
   const [rents, setRents] = useState([]);
@@ -22,10 +25,10 @@ const RentsList = () => {
     try {
       const response = await axios.get("/rent/rents");
       setRents(response.data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch rents:", error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -60,39 +63,9 @@ const RentsList = () => {
     console.log("Modal closed");
     setIsModalOpen(false);
   };
-  const renderSkeletonRow = () => {
-    return (
-      <tr>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-       <td className="px-6 py-4 whitespace-no-wrap">
-          <Skeleton variant="text" width={100} />
-        </td>
-      </tr>
-    );
-  };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Rents List</h1>
       <button
         className="bg-blue-500 mb-10 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
@@ -100,66 +73,29 @@ const RentsList = () => {
       >
         Rent Material
       </button>
-      <RentMaterialModal isOpen={isModalOpen} onClose={closeModal} />
-
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="py-2 px-4 border">Material</th>
-            <th className="py-2 px-4 border">Client</th>
-            <th className="py-2 px-4 border">Quantity</th>
-            <th className="py-2 px-4 border">Start Date</th>
-            <th className="py-2 px-4 border">End Date</th>
-            <th className="py-2 px-4 border">Status</th>
-            <th className="py-2 px-4 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {loading ? (
-            <>
-              {renderSkeletonRow()}
-              {renderSkeletonRow()}
-              {renderSkeletonRow()}
-              {renderSkeletonRow()}
-              {renderSkeletonRow()}
-              {renderSkeletonRow()}
-              {/* Add more skeleton rows as needed */}
-            </>
-          ) : (
-          Array.isArray(rents) &&
-            rents.map((rent) => (
-              <tr key={rent._id} className="hover:bg-gray-100">
-                <td className="py-2 px-4 border">{rent.material.name}</td>
-                <td className="py-2 px-4 border">{rent.client.name}</td>
-                <td className="py-2 px-4 border">{rent.quantity}</td>
-                <td className="py-2 px-4 border">{rent.startDate}</td>
-                <td className="py-2 px-4 border">{rent.endDate}</td>
-                <td className="py-2 px-4 border">{rent.status}</td>
-                <td className="py-2 px-4 border">
-                  {rent.status === "Active" && (
-                    <>
-                      <button
-                        onClick={() => handleCancelRent(rent._id)}
-                        className="mr-2 text-red-600 hover:text-red-800"
-                      >
-                        <XMarkIcon className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => handleCompleteRent(rent._id)}
-                        className="text-green-600 hover:text-green-800"
-                      >
-                        <CheckIcon className="h-5 w-5" />
-                      </button>
-                    </>
-                  )}
-                  {rent.status !== "Active" && (
-                    <CheckIcon className="h-5 w-5 text-gray-400" />
-                  )}
-                </td>
-              </tr>
-            )))}
-        </tbody>
-      </table>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="material Modal"
+        className="modal fixed inset-0 flex items-center justify-center"
+        overlayClassName="overlay fixed inset-0 bg-gray-800 bg-opacity-75"
+      >
+        <div className="bg-white p-8 rounded-lg shadow-lg relative">
+          <button
+            className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+            onClick={closeModal}
+          >
+            <XCircleIcon className="h-6 w-6" />
+          </button>
+          <RentMaterial />
+        </div>
+      </Modal>
+      <RentTable
+        loading={loading}
+        handleCompleteRent={handleCompleteRent}
+        handleCancelRent={handleCancelRent}
+        rents={rents}
+      />
     </div>
   );
 };

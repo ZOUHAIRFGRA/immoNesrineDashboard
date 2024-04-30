@@ -56,29 +56,29 @@ const handleLogOut = () => {
 }
   return (
     <>
-    <IconButton variant="text" size="lg" onClick={openDrawer}>
-      {isDrawerOpen ? (
-        <XMarkIcon className="h-8 w-8 stroke-2" />
-      ) : (
-        <Bars3Icon className="h-8 w-8 stroke-2" />
-      )}
-    </IconButton>
-    <Drawer open={isDrawerOpen} onClose={closeDrawer}>
-      <Card
-        color="transparent"
-        shadow={false}
-        className="h-[calc(100vh-2rem)] w-full p-4 overflow-y-auto"
-      >
-        <div className="mb-2 flex items-center gap-4 p-4">
-          <img
-            src="/logo.svg"
-            alt="brand"
-            className="h-12 w-12"
-          />
-          <Typography variant="h5" color="blue-gray">
-            Immo Nesrine
-          </Typography>
-        </div>
+      <IconButton variant="text" size="lg" onClick={openDrawer}>
+        {isDrawerOpen ? (
+          <XMarkIcon className="h-8 w-8 stroke-2" />
+        ) : (
+          <Bars3Icon className="h-8 w-8 stroke-2" />
+        )}
+      </IconButton>
+      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
+        <Card
+          color="transparent"
+          shadow={false}
+          className="h-screen w-full p-4 overflow-y-auto"
+        >
+          <div className="mb-2 flex items-center gap-4 p-4">
+            <img
+              src="/logo.svg"
+              alt="brand"
+              className="h-12 w-12"
+            />
+            <Typography variant="h5" color="blue-gray">
+              Immo Nesrine
+            </Typography>
+          </div>
           <div className="p-2">
             <Input
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
