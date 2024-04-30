@@ -54,6 +54,10 @@ const handleLogOut = () => {
   localStorage.removeItem('token');
   navigate('/login')
 }
+const handleLinkClick = () => {
+  // Close the sidebar when a link is clicked
+  closeDrawer();
+};
   return (
     <>
       <IconButton variant="text" size="lg" onClick={openDrawer}>
@@ -97,7 +101,7 @@ const handleLogOut = () => {
                 />
               }
             >
-              <Link to="/" >
+              <Link onClick={handleLinkClick} to="/"  >
               <ListItem>
               <ListItemPrefix>
               <HomeModernIcon className="h-5 w-5" />
@@ -124,7 +128,7 @@ const handleLogOut = () => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem>
-                    <Link to="/employees" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/employees" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -132,7 +136,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/assignProject" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/assignProject" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -172,7 +176,7 @@ const handleLogOut = () => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem>
-                    <Link to="/addclient" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/addclient" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -180,7 +184,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/clients" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/clients" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -220,7 +224,7 @@ const handleLogOut = () => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem>
-                    <Link to="/addproject" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/addproject" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -228,7 +232,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/projects" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/projects" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -268,7 +272,7 @@ const handleLogOut = () => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem>
-                    <Link to="/addworker" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/addworker" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -276,7 +280,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/workers" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/workers" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -284,7 +288,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/assignPrjToWorker" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/assignPrjToWorker" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -324,7 +328,7 @@ const handleLogOut = () => {
               <AccordionBody className="py-1">
                 <List className="p-0">
                   <ListItem>
-                    <Link to="/addmaterial" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/addmaterial" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -332,7 +336,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/materials" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/materials" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -340,7 +344,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/rents" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/rents" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -348,7 +352,7 @@ const handleLogOut = () => {
                     </Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="/rentMaterial" className="flex items-center">
+                    <Link onClick={handleLinkClick} to="/rentMaterial" className="flex items-center">
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
@@ -358,7 +362,7 @@ const handleLogOut = () => {
                 </List>
               </AccordionBody>
             </Accordion>
-            <Link to="/expenses" >
+            <Link onClick={handleLinkClick} to="/expenses" >
               <ListItem>
               <ListItemPrefix>
               <CurrencyDollarIcon className="h-5 w-5" />
