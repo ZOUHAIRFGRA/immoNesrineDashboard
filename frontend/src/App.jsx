@@ -10,7 +10,7 @@ import ClientList from "./components/clients/ClientList";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
 import { useState, useEffect } from "react";
-import axios from "axios";
+import Axios from "axios";
 import AddClientForm from "./components/clients/AddClient";
 import EmployeePage from "./components/employees/EmployeePage";
 import ProjectAssignmentForm from "./components/ProjectAssignmentForm";
@@ -26,19 +26,20 @@ import RentsList from "./components/materials/RentList";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  Axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
+  const token = localStorage.getItem("token");
+  if(token) { Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;}
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
-    console.log(axios.defaults.baseURL) // https://immonesrine-api.vercel.app/api/v1
+    // Axios.defaults.baseURL = `${import.meta.env.VITE_APP_API_URL}`;
+    console.log(Axios.defaults.baseURL) // https://immonesrine-api.vercel.app/api/v1
    
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setIsLoggedIn(true);
+      console.log('true')
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [token]);
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
